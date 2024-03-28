@@ -22,8 +22,8 @@ class WooCommerceConnector:
             timeout=1000,
         )
 
-    def get_products(self, filters: dict | None = None):
-        filter_string = build_filter_string(filters)
+    def get_products(self, **kwargs):
+        filter_string = build_filter_string(kwargs)
         try:
             response = self.woocommerce.get(
                 f'products{f"?{filter_string}" if filter_string else ""}'
@@ -73,6 +73,27 @@ class WooCommerceConnector:
     def delete_product(self, id: str):
         try:
             response = self.woocommerce.delete(f"products/{id}")
+            response.raise_for_status()
+            return response.json()
+        except Exception:
+            log_woocommerce_error(response)
+            raise
+
+    def get_orders(self, **kwargs):
+        filter_string = build_filter_string(kwargs)
+        try:
+            response = self.woocommerce.get(
+                f'orders{f"?{filter_string}" if filter_string else ""}'
+            )
+            response.raise_for_status()
+            return response
+        except Exception:
+            log_woocommerce_error(response)
+            raise
+
+    def get_order(self, id: str):
+        try:
+            response = self.woocommerce.get(f"orders/{id}")
             response.raise_for_status()
             return response.json()
         except Exception:
