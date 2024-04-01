@@ -31,13 +31,19 @@
   "shipping_tax_account",
   "stock_sync_tab",
   "enable_stock_sync",
-  "section_break_drdxe",
-  "stock_update_method",
   "last_stock_sync",
-  "column_break_ah4th",
   "warehouse",
-  "interval_in_minutes",
-  "scheduled_job"
+  "column_break_ah4th",
+  "stock_sync_interval",
+  "stock_server_script",
+  "order_sync_tab",
+  "enable_order_sync",
+  "order_per_page",
+  "last_order_sync",
+  "column_break_zht3a",
+  "order_sync_frequency",
+  "order_sync_interval",
+  "order_server_script"
  ],
  "fields": [
   {
@@ -115,6 +121,7 @@
    "reqd": 1
   },
   {
+   "collapsible": 1,
    "depends_on": "enable_sync",
    "fieldname": "webhooks_section",
    "fieldtype": "Section Break",
@@ -189,26 +196,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.stock_update_method == \"In Certain Time Intervals\"",
-   "fieldname": "interval_in_minutes",
-   "fieldtype": "Int",
-   "label": "Interval in Minutes",
-   "mandatory_depends_on": "eval:doc.stock_update_method == \"In Certain Time Intervals\""
-  },
-  {
-   "depends_on": "enable_stock_sync",
-   "fieldname": "section_break_drdxe",
-   "fieldtype": "Section Break"
-  },
-  {
-   "description": "Update Stock from ERPNext to WooCommerce:\n<br>\n1. <b>On Stock Update</b>: Everytime a stock transaction is submitted\n<br>\n2. <b>In Certain Time Intervals</b>: Every x minutes",
-   "fieldname": "stock_update_method",
-   "fieldtype": "Select",
-   "label": "Method",
-   "options": "On Stock Update\nIn Certain Time Intervals",
-   "reqd": 1
-  },
-  {
    "depends_on": "enable_stock_sync",
    "description": "Stock is synced from this warehouse to WooCommerce",
    "fieldname": "warehouse",
@@ -224,25 +211,83 @@
    "label": "Verify SSL"
   },
   {
-   "depends_on": "eval:doc.stock_update_method == \"In Certain Time Intervals\"",
-   "fieldname": "scheduled_job",
-   "fieldtype": "Link",
-   "label": "Scheduled Job",
-   "options": "Scheduled Job Type",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.stock_update_method == \"In Certain Time Intervals\"",
+   "depends_on": "enable_stock_sync",
    "fieldname": "last_stock_sync",
    "fieldtype": "Datetime",
    "label": "Last Stock Sync",
    "read_only": 1
+  },
+  {
+   "fieldname": "stock_server_script",
+   "fieldtype": "Link",
+   "label": "Stock Server Script",
+   "options": "Server Script",
+   "read_only": 1
+  },
+  {
+   "fieldname": "order_sync_tab",
+   "fieldtype": "Tab Break",
+   "label": "Order Sync"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_order_sync",
+   "fieldtype": "Check",
+   "label": "Enable Order Sync"
+  },
+  {
+   "depends_on": "enable_order_sync",
+   "fieldname": "last_order_sync",
+   "fieldtype": "Datetime",
+   "label": "Last Order Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_zht3a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.enable_order_sync && doc.order_sync_frequency==\"Minutes\"\n",
+   "fieldname": "order_sync_interval",
+   "fieldtype": "Int",
+   "label": "Order Sync Interval (Mins)",
+   "mandatory_depends_on": "eval:doc.enable_order_sync && doc.order_sync_frequency==\"Minutes\"\n"
+  },
+  {
+   "depends_on": "enable_order_sync",
+   "fieldname": "order_server_script",
+   "fieldtype": "Link",
+   "label": "Order Sync Server Script",
+   "options": "Server Script",
+   "read_only": 1
+  },
+  {
+   "depends_on": "enable_stock_sync",
+   "fieldname": "stock_sync_interval",
+   "fieldtype": "Int",
+   "label": "Stock Sync Interval (Mins)",
+   "mandatory_depends_on": "enable_stock_sync"
+  },
+  {
+   "depends_on": "enable_order_sync",
+   "fieldname": "order_sync_frequency",
+   "fieldtype": "Select",
+   "label": "Order Sync Frequency",
+   "mandatory_depends_on": "enable_order_sync",
+   "options": "Minutes\nHourly\nDaily"
+  },
+  {
+   "depends_on": "enable_order_sync",
+   "description": "Defaults to 10",
+   "fieldname": "order_per_page",
+   "fieldtype": "Int",
+   "label": "Orders Per Page"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-03-06 12:11:27.104366",
+ "modified": "2024-04-04 16:28:49.151443",
  "modified_by": "Administrator",
  "module": "WooCommerce",
  "name": "WooCommerce Setup",
