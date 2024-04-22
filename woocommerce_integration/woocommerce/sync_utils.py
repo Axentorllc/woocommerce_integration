@@ -76,7 +76,9 @@ def get_woocommerce_orders():
     orders = []
 
     order_response = woocommerce.get_orders(
-        modified_after=last_sync_datetime, per_page=per_page
+        per_page=per_page,
+        modified_after=last_sync_datetime,
+        status=setup.order_status_filters,
     )
 
     orders.extend(order_response.json())
@@ -84,7 +86,10 @@ def get_woocommerce_orders():
 
     for page_idx in range(1, pages):
         order_response = woocommerce.get_orders(
-            page=page_idx + 1, per_page=per_page, modified_after=last_sync_datetime
+            page=page_idx + 1,
+            per_page=per_page,
+            modified_after=last_sync_datetime,
+            status=setup.order_status_filters,
         )
         orders.extend(order_response.json())
 

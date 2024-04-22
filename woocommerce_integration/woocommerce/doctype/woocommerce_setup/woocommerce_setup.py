@@ -11,6 +11,10 @@ from woocommerce_integration.general_utils import get_woocommerce_setup
 
 
 class WooCommerceSetup(Document):
+    @property
+    def order_status_filters(self):
+        return [row.status for row in self.order_status]
+
     def onload(self):
         series = (
             frappe.get_meta("Sales Order").get_options("naming_series") or "SO-WOO-"

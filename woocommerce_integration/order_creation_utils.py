@@ -67,7 +67,7 @@ def create_address(raw_data: dict, customer: dict, address_type: str):
         {
             "pincode": raw_data.get("postcode"),
             "address_line1": raw_data.get("address_1", "Not Provided"),
-            "woocomm_customer_id": customer.woocommerce_id,
+            "woocomm_customer_id": customer.woocomm_customer_id,
             "address_type": address_type,
         },
     ):
@@ -77,7 +77,7 @@ def create_address(raw_data: dict, customer: dict, address_type: str):
     address.address_line1 = raw_data.get("address_1", "Not Provided")
     address.address_line2 = raw_data.get("address_2")
     address.city = raw_data.get("city", "Not Provided")
-    address.woocomm_customer_id = customer.woocommerce_id
+    address.woocomm_customer_id = customer.woocomm_customer_id
     address.address_type = address_type
     address.state = raw_data.get("state")
     address.pincode = raw_data.get("postcode")
@@ -104,7 +104,7 @@ def create_contact(data: dict, customer: str):
         "Contact",
         {
             "email_id": email,
-            "woocomm_customer_id": customer.woocommerce_id,
+            "woocomm_customer_id": customer.woocomm_customer_id,
         },
     ):
         return
@@ -113,7 +113,7 @@ def create_contact(data: dict, customer: str):
     contact.first_name = data.get("first_name")
     contact.last_name = data.get("last_name")
     contact.email_id = email
-    contact.woocomm_customer_id = customer.woocommerce_id
+    contact.woocomm_customer_id = customer.woocomm_customer_id
     contact.is_primary_contact = 1
     contact.is_billing_contact = 1
 

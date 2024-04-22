@@ -43,7 +43,9 @@
   "column_break_zht3a",
   "order_sync_frequency",
   "order_sync_interval",
-  "order_server_script"
+  "order_server_script",
+  "filters_section",
+  "order_status"
  ],
  "fields": [
   {
@@ -282,12 +284,23 @@
    "fieldname": "order_per_page",
    "fieldtype": "Int",
    "label": "Orders Per Page"
+  },
+  {
+   "fieldname": "filters_section",
+   "fieldtype": "Section Break",
+   "label": "Filters"
+  },
+  {
+   "fieldname": "order_status",
+   "fieldtype": "Table",
+   "label": "Order status",
+   "options": "WooCommerce Order Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-04-04 16:28:49.151443",
+ "modified": "2024-04-22 16:53:51.604167",
  "modified_by": "Administrator",
  "module": "WooCommerce",
  "name": "WooCommerce Setup",
